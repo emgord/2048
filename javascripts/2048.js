@@ -5,7 +5,13 @@ var Game = function() {
                 [0, 0, 0, 0]];
 };
 
-
+Game.prototype.addTile = function() {
+  var row = Math.floor(Math.random() * 3);
+  var column = Math.floor(Math.random() * 3);
+  var options = [2,2,4];
+  var value = options[Math.floor(Math.random() * options.length)];
+  this.board[row][column] = value;
+};
 
 
 Game.prototype.moveTile = function(tile, direction) {
