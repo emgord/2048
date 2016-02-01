@@ -16,8 +16,10 @@ Recreate as much of the original game as is reasonable in the one week we have a
 
 ### Project Baseline
 - Play a couple games of [2048](http://gabrielecirulli.github.io/2048/). Think about everything that's likely happening in the code to support what's happening on the screen. Once you've got a feel for the game, talk with your pair and answer the following questions:
-  1. How does scoring work?
-  1. When do tiles enter the game?
+  1. How does scoring work?  
+  Every time you merge two tiles together the merged total is added to your total score
+  1. When do tiles enter the game?  
+  Tiles appear on random empty spaces at the beginning of each turn, after you press the arrow key and tiles are merged together
   1. How do you know if you've won?
   1. How do you know if you've lost?
   1. What makes tiles move?
