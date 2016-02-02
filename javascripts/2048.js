@@ -56,15 +56,18 @@ var mergeRightDown = function(array){
 
 Game.prototype.leftShifter = function() {
     for (var row = 0; row < this.board.length; row++) {
-      var zeros = [];
       var nonzeros = [];
       for (var col = 0; col < this.board.length; col++) {
-        if (this.board[row][col] === 0) {
-          zeros.push(this.board[row][col]);
-        } else {
+        if (this.board[row][col] !== 0) {
           nonzeros.push(this.board[row][col]);
         }
       }
+      if (nonzeros.length !== 0) {
+        nonzeros = mergeLeftUp(nonzeros);
+      }
+
+      var numZeros = (this.board.length - nonzeros.length);
+      var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
       var new_row = nonzeros.concat(zeros);
       this.board[row] = new_row;
     }
@@ -111,19 +114,23 @@ Game.prototype.downShifter = function() {
 
 Game.prototype.upShifter = function() {
   for (var col = 0; col < this.board.length; col++) {
-    var zeros = [];
     var nonzeros = [];
     for (var row = 0; row < this.board.length; row++) {
-      if (this.board[row][col] === 0) {
-        zeros.push(this.board[row][col]);
-      } else {
+      if (this.board[row][col] !== 0) {
         nonzeros.push(this.board[row][col]);
       }
     }
+
+    if (nonzeros.length !== 0) {
+      nonzeros = mergeLeftUp(nonzeros);
+    }
+    var numZeros = (this.board.length - nonzeros.length);
+    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
       var new_col = nonzeros.concat(zeros);
         for (var i = 0; i < this.board.length; i++){
         this.board[i][col] = new_col[i];
     }
+
   }
 };
 
