@@ -7,19 +7,18 @@ var Game = function() {
   this.addTile();
 };
 
-
+//check if board is full before calling this method (otherwise infinite loop)
 Game.prototype.addTile = function() {
-  var row = Math.floor(Math.random() * 3);
-  var column = Math.floor(Math.random() * 3);
-  while (game.board[row][column] !== 0) {
-    row = Math.floor(Math.random() * 3);
-    column = Math.floor(Math.random() * 3);
+  var row = Math.floor(Math.random() * 4);
+  var column = Math.floor(Math.random() * 4);
+  while (this.board[row][column] !== 0) {
+    row = Math.floor(Math.random() * 4);
+    column = Math.floor(Math.random() * 4);
   }
   var options = [2,2,4];
   var value = options[Math.floor(Math.random() * options.length)];
   this.board[row][column] = value;
 };
-
 
 // Game.prototype.moveTile = function(tile, direction) {
 //   // Game method here
