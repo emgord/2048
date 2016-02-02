@@ -66,6 +66,9 @@ $(document).ready(function() {
       var tile = $('.tile');
 
       game.moveTile(tile, event.which);
+      game.addTile();
+      game.clearBoard();
+      game.drawBoard();
     }
   });
 });
