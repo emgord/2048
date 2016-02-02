@@ -41,7 +41,9 @@ Game.prototype.moveTile = function(tile, direction) {
 Game.prototype.drawBoard = function(){
   for(var row = 0; row < this.board.length; row++) {
     for(var col = 0; col < this.board.length; col++)
+    if (this.board[row][col] !== 0) {
     $("#gameboard").append($("<div class=\"tile\" data-row=\"r" + row + "\", data-col=\"c" + col + "\" data-val=\"" + this.board[row][col] + "\">" + this.board[row][col] + "</div>"));
+  }
   }
 };
 
