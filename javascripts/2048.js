@@ -21,13 +21,28 @@ Game.prototype.addTile = function() {
 };
 
 var merge = function(array){
-  for(var i = 0; i < array.length; i++){
-    if (array[i] == array[i+1]){
-      var val = array[i];
-      array[i] = 0;
-      array[i+1] = val * 2;
+  var squished_array = [];
+  while (array.length > 0) {
+    if (array.length === 1) {
+      squished_array.push(array[0]);
+      array.splice(0, 1);
+    } else if (array[0] === array[1]) {
+      squished_array.push(array[0] * 2);
+      array.splice(0, 2);
+    } else {
+      squished_array.push(array[0]);
+      array.splice(0, 1);
     }
+
   }
+  return squished_array;
+  // for(var i = 0; i < array.length; i++){
+  //   if (array[i] == array[i+1]){
+  //     var val = array[i];
+  //     array[i] = 0;
+  //     array[i+1] = val * 2;
+  //   }
+  // }
 
 };
 
@@ -47,20 +62,22 @@ Game.prototype.leftShifter = function() {
     }
 };
 
-// this assumes arrow key was right
 Game.prototype.rightShifter = function() {
   for (var row = 0; row < this.board.length; row++) {
-    var zeros = [];
+    // var zeros = [];
     var nonzeros = [];
     for (var col = 0; col < this.board.length; col++) {
-      if (this.board[row][col] === 0) {
-        zeros.push(this.board[row][col]);
-      } else {
+      if (this.board[row][col] !== 0) {
         nonzeros.push(this.board[row][col]);
       }
     }
+    if (nonzeros.length !== 0) {
+      nonzeros = merge(nonzeros);
+    }
+
+    var numZeros = (this.board[row].length - nonzeros.length);
+    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
     var new_row = zeros.concat(nonzeros);
-    merge(new_row);
     this.board[row] = new_row;
   }
 };
