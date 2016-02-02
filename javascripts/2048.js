@@ -22,10 +22,10 @@ Game.prototype.addTile = function() {
 
 Game.prototype.leftShifter = function() {
   // var shifter = function(){
-    for (row = 0; row < this.board.length; row++) {
+    for (var row = 0; row < this.board.length; row++) {
       var zeros = [];
       var nonzeros = [];
-      for (col = 0; col < this.board.length; col++) {
+      for (var col = 0; col < this.board.length; col++) {
         if (this.board[row][col] === 0) {
           zeros.push(this.board[row][col]);
         } else {
@@ -40,11 +40,11 @@ Game.prototype.leftShifter = function() {
 };
 
 // this assumes arrow key was right
-Game.prototype.shiftTiles = function() {
-  for (row = 0; row < this.board.length; row++) {
+Game.prototype.rightShifter = function() {
+  for (var row = 0; row < this.board.length; row++) {
     var zeros = [];
     var nonzeros = [];
-    for (col = 0; col < this.board.length; col++) {
+    for (var col = 0; col < this.board.length; col++) {
       if (this.board[row][col] === 0) {
         zeros.push(this.board[row][col]);
       } else {
@@ -56,13 +56,51 @@ Game.prototype.shiftTiles = function() {
   }
 };
 
+Game.prototype.upShifter = function() {
+  for (var col = 0; col < this.board.length; col++) {
+    var zeros = [];
+    var nonzeros = [];
+    for (var row = 0; row < this.board.length; row++) {
+      if (this.board[row][col] === 0) {
+        zeros.push(this.board[row][col]);
+      } else {
+        nonzeros.push(this.board[row][col]);
+      }
+    }
+      var new_col = nonzeros.concat(zeros);
+        for (var i = 0; i < this.board.length; i++){
+        this.board[i][col] = new_col[i];
+    }
+  }
+};
+
+Game.prototype.downShifter = function() {
+  for (var col = 0; col < this.board.length; col++) {
+    var zeros = [];
+    var nonzeros = [];
+    for (var row = 0; row < this.board.length; row++) {
+      if (this.board[row][col] === 0) {
+        zeros.push(this.board[row][col]);
+      } else {
+        nonzeros.push(this.board[row][col]);
+      }
+    }
+      var new_col = zeros.concat(nonzeros);
+        for (var i = 0; i < this.board.length; i++){
+        this.board[i][col] = new_col[i];
+    }
+  }
+};
+
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
     case 38: //up
       console.log('up');
+      this.upShifter();
       break;
     case 40: //down
+    this.downShifter();
       console.log('down');
       break;
     case 37: //left
@@ -71,7 +109,7 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 39: //right
       console.log('right');
-      this.shiftTiles();
+      this.rightShifter();
       break;
   }
 };
