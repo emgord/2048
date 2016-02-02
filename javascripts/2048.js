@@ -50,7 +50,7 @@ Game.prototype.drawBoard = function(){
 };
 
 Game.prototype.clearBoard = function(){
-
+  $(".tile").remove();
 };
 
 $(document).ready(function() {
@@ -58,6 +58,7 @@ $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
   game.drawBoard();
+
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
