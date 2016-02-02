@@ -20,7 +20,7 @@ Game.prototype.addTile = function() {
   this.board[row][column] = value;
 };
 
-var merge = function(array){
+var mergeLeftUp = function(array){
   var squished_array = [];
   while (array.length > 0) {
     if (array.length === 1) {
@@ -33,17 +33,25 @@ var merge = function(array){
       squished_array.push(array[0]);
       array.splice(0, 1);
     }
-
   }
   return squished_array;
-  // for(var i = 0; i < array.length; i++){
-  //   if (array[i] == array[i+1]){
-  //     var val = array[i];
-  //     array[i] = 0;
-  //     array[i+1] = val * 2;
-  //   }
-  // }
+};
 
+var mergeRightDown = function(array){
+  var squished_array = [];
+  while (array.length > 0) {
+    if (array.length === 1) {
+      squished_array.unshift(array[0]);
+      array.splice(0, 1);
+    } else if (array[array.length-1] === array[array.length-2]) {
+      squished_array.unshift(array[array.length-1] * 2);
+      array.splice(array.length-2, 2);
+    } else {
+      squished_array.unshift(array[array.length-1]);
+      array.splice(array.length-1, 1);
+    }
+  }
+  return squished_array;
 };
 
 Game.prototype.leftShifter = function() {
@@ -64,7 +72,6 @@ Game.prototype.leftShifter = function() {
 
 Game.prototype.rightShifter = function() {
   for (var row = 0; row < this.board.length; row++) {
-    // var zeros = [];
     var nonzeros = [];
     for (var col = 0; col < this.board.length; col++) {
       if (this.board[row][col] !== 0) {
@@ -72,13 +79,33 @@ Game.prototype.rightShifter = function() {
       }
     }
     if (nonzeros.length !== 0) {
-      nonzeros = merge(nonzeros);
+      nonzeros = mergeRightDown(nonzeros);
     }
 
-    var numZeros = (this.board[row].length - nonzeros.length);
+    var numZeros = (this.board.length - nonzeros.length);
     var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
     var new_row = zeros.concat(nonzeros);
     this.board[row] = new_row;
+  }
+};
+
+Game.prototype.downShifter = function() {
+  for (var col = 0; col < this.board.length; col++) {
+    var nonzeros = [];
+    for (var row = 0; row < this.board.length; row++) {
+      if (this.board[row][col] !== 0) {
+        nonzeros.push(this.board[row][col]);
+      }
+    }
+    if (nonzeros.length !== 0) {
+      nonzeros = mergeRightDown(nonzeros);
+    }
+    var numZeros = (this.board.length - nonzeros.length);
+    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
+      var new_col = zeros.concat(nonzeros);
+        for (var i = 0; i < this.board.length; i++){
+        this.board[i][col] = new_col[i];
+    }
   }
 };
 
@@ -100,23 +127,7 @@ Game.prototype.upShifter = function() {
   }
 };
 
-Game.prototype.downShifter = function() {
-  for (var col = 0; col < this.board.length; col++) {
-    var zeros = [];
-    var nonzeros = [];
-    for (var row = 0; row < this.board.length; row++) {
-      if (this.board[row][col] === 0) {
-        zeros.push(this.board[row][col]);
-      } else {
-        nonzeros.push(this.board[row][col]);
-      }
-    }
-      var new_col = zeros.concat(nonzeros);
-        for (var i = 0; i < this.board.length; i++){
-        this.board[i][col] = new_col[i];
-    }
-  }
-};
+
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
