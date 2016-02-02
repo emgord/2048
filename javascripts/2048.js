@@ -20,8 +20,18 @@ Game.prototype.addTile = function() {
   this.board[row][column] = value;
 };
 
+var merge = function(array){
+  for(var i = 0; i < array.length; i++){
+    if (array[i] == array[i+1]){
+      var val = array[i];
+      array[i] = 0;
+      array[i+1] = val * 2;
+    }
+  }
+
+};
+
 Game.prototype.leftShifter = function() {
-  // var shifter = function(){
     for (var row = 0; row < this.board.length; row++) {
       var zeros = [];
       var nonzeros = [];
@@ -35,8 +45,6 @@ Game.prototype.leftShifter = function() {
       var new_row = nonzeros.concat(zeros);
       this.board[row] = new_row;
     }
-  // };
-  // return shifter;
 };
 
 // this assumes arrow key was right
@@ -52,6 +60,7 @@ Game.prototype.rightShifter = function() {
       }
     }
     var new_row = zeros.concat(nonzeros);
+    merge(new_row);
     this.board[row] = new_row;
   }
 };
