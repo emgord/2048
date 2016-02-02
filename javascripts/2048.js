@@ -20,6 +20,23 @@ Game.prototype.addTile = function() {
   this.board[row][column] = value;
 };
 
+// this assumes arrow key was right
+Game.prototype.shiftTiles = function() {
+  for (row = 0; row < this.board.length; row++) {
+    var zeros = [];
+    var nonzeros = [];
+    for (col = 0; col < this.board.length; col++) {
+      if (this.board[row][col] === 0) {
+        zeros.push(this.board[row][col]);
+      } else {
+        nonzeros.push(this.board[row][col]);
+      }
+    }
+    var new_row = zeros.concat(nonzeros);
+    this.board[row] = new_row;
+  }
+};
+
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
@@ -34,6 +51,7 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 39: //right
       console.log('right');
+      this.shiftTiles();
       break;
   }
 };
