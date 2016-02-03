@@ -5,9 +5,16 @@ var Game = function() {
                 [0, 0, 0, 0]];
   this.addTile();
   this.addTile();
+  this.win = false;
 };
 
-//check if board is full before calling this method (otherwise infinite loop)
+Game.prototype.checkWinner = function() {
+  var flattenedBoard = [].concat.apply([],this.board);
+  if (flattenedBoard.indexOf(2048) !== -1) {
+    this.win = true;
+  }
+};
+
 Game.prototype.addTile = function() {
   var flattenedBoard = [].concat.apply([],this.board);
   if (flattenedBoard.indexOf(0) === -1) {
