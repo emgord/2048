@@ -9,6 +9,120 @@ var Game = function() {
   this.lose = false;
 };
 
+var mergeLeftUp = function(array){
+  var squished_array = [];
+  while (array.length > 0) {
+    if (array.length === 1) {
+      squished_array.push(array[0]);
+      array.splice(0, 1);
+    } else if (array[0] === array[1]) {
+      squished_array.push(array[0] * 2);
+      array.splice(0, 2);
+    } else {
+      squished_array.push(array[0]);
+      array.splice(0, 1);
+    }
+  }
+  return squished_array;
+};
+
+var mergeRightDown = function(array){
+  var squished_array = [];
+  while (array.length > 0) {
+    if (array.length === 1) {
+      squished_array.unshift(array[0]);
+      array.splice(0, 1);
+    } else if (array[array.length-1] === array[array.length-2]) {
+      squished_array.unshift(array[array.length-1] * 2);
+      array.splice(array.length-2, 2);
+    } else {
+      squished_array.unshift(array[array.length-1]);
+      array.splice(array.length-1, 1);
+    }
+  }
+  return squished_array;
+};
+
+var leftShifter = function(board) {
+    for (var row = 0; row < board.length; row++) {
+      var nonzeros = [];
+      for (var col = 0; col < board.length; col++) {
+        if (board[row][col] !== 0) {
+          nonzeros.push(board[row][col]);
+        }
+      }
+      if (nonzeros.length !== 0) {
+        nonzeros = mergeLeftUp(nonzeros);
+      }
+
+      var numZeros = (board.length - nonzeros.length);
+      var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
+      var new_row = nonzeros.concat(zeros);
+      board[row] = new_row;
+    }
+};
+
+var rightShifter = function(board) {
+  for (var row = 0; row < board.length; row++) {
+    var nonzeros = [];
+    for (var col = 0; col < board.length; col++) {
+      if (board[row][col] !== 0) {
+        nonzeros.push(board[row][col]);
+      }
+    }
+    if (nonzeros.length !== 0) {
+      nonzeros = mergeRightDown(nonzeros);
+    }
+
+    var numZeros = (board.length - nonzeros.length);
+    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
+    var new_row = zeros.concat(nonzeros);
+    board[row] = new_row;
+  }
+};
+
+var downShifter = function(board) {
+  for (var col = 0; col < board.length; col++) {
+    var nonzeros = [];
+    for (var row = 0; row < board.length; row++) {
+      if (board[row][col] !== 0) {
+        nonzeros.push(board[row][col]);
+      }
+    }
+    if (nonzeros.length !== 0) {
+      nonzeros = mergeRightDown(nonzeros);
+    }
+    var numZeros = (board.length - nonzeros.length);
+    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
+      var new_col = zeros.concat(nonzeros);
+        for (var i = 0; i < board.length; i++){
+        board[i][col] = new_col[i];
+    }
+  }
+};
+
+var upShifter = function(board) {
+  for (var col = 0; col < board.length; col++) {
+    var nonzeros = [];
+    for (var row = 0; row < board.length; row++) {
+      if (board[row][col] !== 0) {
+        nonzeros.push(board[row][col]);
+      }
+    }
+
+    if (nonzeros.length !== 0) {
+      nonzeros = mergeLeftUp(nonzeros);
+    }
+    var numZeros = (board.length - nonzeros.length);
+    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
+      var new_col = nonzeros.concat(zeros);
+        for (var i = 0; i < board.length; i++){
+        board[i][col] = new_col[i];
+    }
+
+  }
+};
+
 Game.prototype.checkLoser = function() {
   var fakeBoard = this.board.slice(0);
   upShifter(fakeBoard);
@@ -45,140 +159,24 @@ Game.prototype.addTile = function() {
   this.board[row][column] = value;
 };
 
-var mergeLeftUp = function(array){
-  var squished_array = [];
-  while (array.length > 0) {
-    if (array.length === 1) {
-      squished_array.push(array[0]);
-      array.splice(0, 1);
-    } else if (array[0] === array[1]) {
-      squished_array.push(array[0] * 2);
-      array.splice(0, 2);
-    } else {
-      squished_array.push(array[0]);
-      array.splice(0, 1);
-    }
-  }
-  return squished_array;
-};
-
-var mergeRightDown = function(array){
-  var squished_array = [];
-  while (array.length > 0) {
-    if (array.length === 1) {
-      squished_array.unshift(array[0]);
-      array.splice(0, 1);
-    } else if (array[array.length-1] === array[array.length-2]) {
-      squished_array.unshift(array[array.length-1] * 2);
-      array.splice(array.length-2, 2);
-    } else {
-      squished_array.unshift(array[array.length-1]);
-      array.splice(array.length-1, 1);
-    }
-  }
-  return squished_array;
-};
-
-Game.prototype.leftShifter = function() {
-    for (var row = 0; row < this.board.length; row++) {
-      var nonzeros = [];
-      for (var col = 0; col < this.board.length; col++) {
-        if (this.board[row][col] !== 0) {
-          nonzeros.push(this.board[row][col]);
-        }
-      }
-      if (nonzeros.length !== 0) {
-        nonzeros = mergeLeftUp(nonzeros);
-      }
-
-      var numZeros = (this.board.length - nonzeros.length);
-      var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
-      var new_row = nonzeros.concat(zeros);
-      this.board[row] = new_row;
-    }
-};
-
-Game.prototype.rightShifter = function() {
-  for (var row = 0; row < this.board.length; row++) {
-    var nonzeros = [];
-    for (var col = 0; col < this.board.length; col++) {
-      if (this.board[row][col] !== 0) {
-        nonzeros.push(this.board[row][col]);
-      }
-    }
-    if (nonzeros.length !== 0) {
-      nonzeros = mergeRightDown(nonzeros);
-    }
-
-    var numZeros = (this.board.length - nonzeros.length);
-    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
-    var new_row = zeros.concat(nonzeros);
-    this.board[row] = new_row;
-  }
-};
-
-Game.prototype.downShifter = function() {
-  for (var col = 0; col < this.board.length; col++) {
-    var nonzeros = [];
-    for (var row = 0; row < this.board.length; row++) {
-      if (this.board[row][col] !== 0) {
-        nonzeros.push(this.board[row][col]);
-      }
-    }
-    if (nonzeros.length !== 0) {
-      nonzeros = mergeRightDown(nonzeros);
-    }
-    var numZeros = (this.board.length - nonzeros.length);
-    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
-      var new_col = zeros.concat(nonzeros);
-        for (var i = 0; i < this.board.length; i++){
-        this.board[i][col] = new_col[i];
-    }
-  }
-};
-
-Game.prototype.upShifter = function() {
-  for (var col = 0; col < this.board.length; col++) {
-    var nonzeros = [];
-    for (var row = 0; row < this.board.length; row++) {
-      if (this.board[row][col] !== 0) {
-        nonzeros.push(this.board[row][col]);
-      }
-    }
-
-    if (nonzeros.length !== 0) {
-      nonzeros = mergeLeftUp(nonzeros);
-    }
-    var numZeros = (this.board.length - nonzeros.length);
-    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
-      var new_col = nonzeros.concat(zeros);
-        for (var i = 0; i < this.board.length; i++){
-        this.board[i][col] = new_col[i];
-    }
-
-  }
-};
-
-
-
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
     case 38: //up
-      console.log('up');
-      this.upShifter();
+      // console.log('up');
+      upShifter(this.board);
       break;
     case 40: //down
-    this.downShifter();
-      console.log('down');
+      downShifter(this.board);
+      // console.log('down');
       break;
     case 37: //left
-      console.log('left');
-      this.leftShifter();
+      // console.log('left');
+      leftShifter(this.board);
       break;
     case 39: //right
-      console.log('right');
-      this.rightShifter();
+      // console.log('right');
+      rightShifter(this.board);
       break;
   }
 };
@@ -214,6 +212,11 @@ $(document).ready(function() {
       game.addTile();
       game.clearBoard();
       game.drawBoard();
+      game.checkWinner();
+      game.checkLoser();
+      if (this.win || this.lose) {
+        console.log("Game Over, lost: " + this.lose + ", win: " + this.win);
+      }
     }
   });
 });
