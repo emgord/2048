@@ -9,6 +9,11 @@ var Game = function() {
 
 //check if board is full before calling this method (otherwise infinite loop)
 Game.prototype.addTile = function() {
+  var flattenedBoard = [].concat.apply([],this.board);
+  if (flattenedBoard.indexOf(0) === -1) {
+    return;
+  }
+
   var row = Math.floor(Math.random() * 4);
   var column = Math.floor(Math.random() * 4);
   while (this.board[row][column] !== 0) {
