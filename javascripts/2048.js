@@ -3,31 +3,37 @@ var Game = function() {
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
                 [0, 0, 0, 0]];
-  // this.board = [[23, 24, 25, 26],
-  //               [27, 28, 29, 30],
-  //               [31, 32, 33, 34],
-  //               [35, 36, 37, 34]];
+  // this.board = [[2, 2, 32, 0],
+  //               [2, 2, 32, 0],
+  //               [4, 2, 0, 0],
+  //               [2, 2, 2, 0]];
   this.addTile();
   this.addTile();
   this.win = false;
   this.lose = false;
+  this.score = 0;
 };
 
 var mergeLeftUp = function(array){
+  var score = 0;
   var squished_array = [];
   while (array.length > 0) {
     if (array.length === 1) {
       squished_array.push(array[0]);
       array.splice(0, 1);
     } else if (array[0] === array[1]) {
-      squished_array.push(array[0] * 2);
+      var mergeVal = array[0] * 2;
+      squished_array.push(mergeVal);
+      score += mergeVal;
       array.splice(0, 2);
     } else {
       squished_array.push(array[0]);
       array.splice(0, 1);
     }
   }
-  return squished_array;
+  return { squished_array: squished_array,
+          score: score
+          };
 };
 
 var mergeRightDown = function(array){
@@ -48,22 +54,26 @@ var mergeRightDown = function(array){
 };
 
 var leftShifter = function(board) {
-    for (var row = 0; row < board.length; row++) {
-      var nonzeros = [];
-      for (var col = 0; col < board.length; col++) {
-        if (board[row][col] !== 0) {
-          nonzeros.push(board[row][col]);
-        }
+var score = 0;
+  for (var row = 0; row < board.length; row++) {
+    var nonzeros = [];
+    for (var col = 0; col < board.length; col++) {
+      if (board[row][col] !== 0) {
+        nonzeros.push(board[row][col]);
       }
-      if (nonzeros.length !== 0) {
-        nonzeros = mergeLeftUp(nonzeros);
-      }
-
-      var numZeros = (board.length - nonzeros.length);
-      var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
-      var new_row = nonzeros.concat(zeros);
-      board[row] = new_row;
     }
+    if (nonzeros.length !== 0) {
+      var mergeReturn = mergeLeftUp(nonzeros);
+      nonzeros = mergeReturn.squished_array;
+      score += mergeReturn.score;
+    }
+
+    var numZeros = (board.length - nonzeros.length);
+    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
+    var new_row = nonzeros.concat(zeros);
+    board[row] = new_row;
+  }
+  return score;
 };
 
 var rightShifter = function(board) {
@@ -131,6 +141,10 @@ function arraysEqual(a1,a2) {
     return JSON.stringify(a1)==JSON.stringify(a2);
 }
 
+Game.prototype.updateScore = function(points) {
+  this.score += points;
+};
+
 Game.prototype.checkLoser = function() {
   var fakeBoard = this.board.slice(0);
   upShifter(fakeBoard);
@@ -181,7 +195,8 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 37: //left
       // console.log('left');
-      leftShifter(this.board);
+      this.score += leftShifter(this.board);
+      console.log(this.score);
       break;
     case 39: //right
       // console.log('right');
