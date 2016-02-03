@@ -3,6 +3,10 @@ var Game = function() {
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
                 [0, 0, 0, 0]];
+  // this.board = [[23, 24, 25, 26],
+  //               [27, 28, 29, 30],
+  //               [31, 32, 33, 34],
+  //               [35, 36, 37, 34]];
   this.addTile();
   this.addTile();
   this.win = false;
@@ -149,6 +153,7 @@ Game.prototype.checkWinner = function() {
 Game.prototype.addTile = function() {
   var flattenedBoard = [].concat.apply([],this.board);
   if (flattenedBoard.indexOf(0) === -1) {
+    this.checkLoser();
     return;
   }
 
@@ -217,7 +222,6 @@ $(document).ready(function() {
       game.clearBoard();
       game.drawBoard();
       game.checkWinner();
-      game.checkLoser();
       if (game.win || game.lose) {
         console.log("Game Over, lost: " + game.lose + ", win: " + game.win);
       }
