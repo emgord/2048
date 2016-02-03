@@ -6,7 +6,20 @@ var Game = function() {
   this.addTile();
   this.addTile();
   this.win = false;
+  this.lose = false;
 };
+
+Game.prototype.checkLoser = function() {
+  var fakeBoard = this.board.slice(0);
+  upShifter(fakeBoard);
+  leftShifter(fakeBoard);
+  rightShifter(fakeBoard);
+  downShifter(fakeBoard);
+  if (fakeBoard === this.board) {
+    this.lose = true;
+  }
+};
+
 
 Game.prototype.checkWinner = function() {
   var flattenedBoard = [].concat.apply([],this.board);
