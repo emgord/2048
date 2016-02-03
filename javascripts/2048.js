@@ -45,14 +45,17 @@ var mergeRightDown = function(array){
       array.splice(0, 1);
     } else if (array[array.length-1] === array[array.length-2]) {
       var mergeVal = array[array.length-1] * 2;
-      squished_array.unshift( * 2);
+      squished_array.unshift(mergeVal);
+      score += mergeVal;
       array.splice(array.length-2, 2);
     } else {
       squished_array.unshift(array[array.length-1]);
       array.splice(array.length-1, 1);
     }
   }
-  return squished_array;
+  return { squished_array: squished_array,
+          score: score
+          };
 };
 
 var leftShifter = function(board) {
