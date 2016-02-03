@@ -121,6 +121,7 @@ var downShifter = function(board) {
 };
 
 var upShifter = function(board) {
+  var score = 0;
   for (var col = 0; col < board.length; col++) {
     var nonzeros = [];
     for (var row = 0; row < board.length; row++) {
@@ -130,16 +131,18 @@ var upShifter = function(board) {
     }
 
     if (nonzeros.length !== 0) {
-      nonzeros = mergeLeftUp(nonzeros);
+      var mergeReturn = mergeLeftUp(nonzeros);
+      nonzeros = mergeReturn.squished_array;
+      score += mergeReturn.score;
     }
     var numZeros = (board.length - nonzeros.length);
     var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
       var new_col = nonzeros.concat(zeros);
         for (var i = 0; i < board.length; i++){
-        board[i][col] = new_col[i];
-    }
-
+          board[i][col] = new_col[i];
+        }
   }
+  return score;
 };
 
 function arraysEqual(a1,a2) {
@@ -192,20 +195,20 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       // console.log('up');
-      upShifter(this.board);
+      this.score += upShifter(this.board);
       break;
     case 40: //down
-      downShifter(this.board);
+      this.score += downShifter(this.board);
       // console.log('down');
       break;
     case 37: //left
       // console.log('left');
       this.score += leftShifter(this.board);
-      console.log(this.score);
+
       break;
     case 39: //right
       // console.log('right');
-      rightShifter(this.board);
+      this.score += rightShifter(this.board);
       break;
   }
 };
