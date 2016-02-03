@@ -82,6 +82,7 @@ var score = 0;
 };
 
 var rightShifter = function(board) {
+  var score = 0;
   for (var row = 0; row < board.length; row++) {
     var nonzeros = [];
     for (var col = 0; col < board.length; col++) {
@@ -90,7 +91,9 @@ var rightShifter = function(board) {
       }
     }
     if (nonzeros.length !== 0) {
-      nonzeros = mergeRightDown(nonzeros);
+      var mergeReturn = mergeRightDown(nonzeros);
+      nonzeros = mergeReturn.squished_array;
+      score += mergeReturn.score;
     }
 
     var numZeros = (board.length - nonzeros.length);
@@ -98,9 +101,11 @@ var rightShifter = function(board) {
     var new_row = zeros.concat(nonzeros);
     board[row] = new_row;
   }
+  return score;
 };
 
 var downShifter = function(board) {
+  var score = 0;
   for (var col = 0; col < board.length; col++) {
     var nonzeros = [];
     for (var row = 0; row < board.length; row++) {
@@ -109,7 +114,9 @@ var downShifter = function(board) {
       }
     }
     if (nonzeros.length !== 0) {
-      nonzeros = mergeRightDown(nonzeros);
+      var mergeReturn = mergeRightDown(nonzeros);
+      nonzeros = mergeReturn.squished_array;
+      score += mergeReturn.score;
     }
     var numZeros = (board.length - nonzeros.length);
     var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
@@ -118,6 +125,7 @@ var downShifter = function(board) {
         board[i][col] = new_col[i];
     }
   }
+  return score;
 };
 
 var upShifter = function(board) {
