@@ -37,13 +37,15 @@ var mergeLeftUp = function(array){
 };
 
 var mergeRightDown = function(array){
+  var score = 0;
   var squished_array = [];
   while (array.length > 0) {
     if (array.length === 1) {
       squished_array.unshift(array[0]);
       array.splice(0, 1);
     } else if (array[array.length-1] === array[array.length-2]) {
-      squished_array.unshift(array[array.length-1] * 2);
+      var mergeVal = array[array.length-1] * 2;
+      squished_array.unshift( * 2);
       array.splice(array.length-2, 2);
     } else {
       squished_array.unshift(array[array.length-1]);
