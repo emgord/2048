@@ -123,13 +123,17 @@ var upShifter = function(board) {
   }
 };
 
+function arraysEqual(a1,a2) {
+    return JSON.stringify(a1)==JSON.stringify(a2);
+}
+
 Game.prototype.checkLoser = function() {
   var fakeBoard = this.board.slice(0);
   upShifter(fakeBoard);
   leftShifter(fakeBoard);
   rightShifter(fakeBoard);
   downShifter(fakeBoard);
-  if (fakeBoard === this.board) {
+  if (arraysEqual(fakeBoard, this.board)) {
     this.lose = true;
   }
 };
@@ -214,8 +218,8 @@ $(document).ready(function() {
       game.drawBoard();
       game.checkWinner();
       game.checkLoser();
-      if (this.win || this.lose) {
-        console.log("Game Over, lost: " + this.lose + ", win: " + this.win);
+      if (game.win || game.lose) {
+        console.log("Game Over, lost: " + game.lose + ", win: " + game.win);
       }
     }
   });
