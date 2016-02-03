@@ -163,7 +163,7 @@ Game.prototype.addTile = function() {
     row = Math.floor(Math.random() * 4);
     column = Math.floor(Math.random() * 4);
   }
-  var options = [2,2,4];
+  var options = [2,2,2,2,2,2,2,2,2,4];
   var value = options[Math.floor(Math.random() * options.length)];
   this.board[row][column] = value;
 };
