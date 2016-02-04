@@ -106,7 +106,7 @@ var score = new Number();
 };
 
 var rightShifter = function(board) {
-  var score = 0;
+  var score = new Number();
   for (var row = 0; row < board.length; row++) {
     var nonzeros = [];
     for (var col = 0; col < board.length; col++) {
@@ -114,15 +114,9 @@ var rightShifter = function(board) {
         nonzeros.push(board[row][col]);
       }
     }
-    if (nonzeros.length !== 0) {
-      var mergeReturn = mergeRightDown(nonzeros);
-      nonzeros = mergeReturn.squished_array;
-      score += mergeReturn.score;
-    }
-
-    var numZeros = (board.length - nonzeros.length);
-    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
-    var new_row = zeros.concat(nonzeros);
+    var axis = axisBuilder(board.length, nonzeros, true);
+    var new_row = axis.rebuiltArray;
+    score += axis.score;
     board[row] = new_row;
   }
   return score;
