@@ -179,7 +179,7 @@ var shifter = function(board, forward, row) {
       board[outer] = new_axis;
     } else {
       for (var i = 0; i < board.length; i++){
-        board[i][inner] = new_axis[i];
+        board[i][outer] = new_axis[i];
       }
     }
   }
@@ -236,20 +236,20 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       // console.log('up');
-      this.score += upShifter(this.board);
+      this.score += shifter(this.board, false, false);
       break;
     case 40: //down
-      this.score += downShifter(this.board);
+      this.score += shifter(this.board, true, false);
       // console.log('down');
       break;
     case 37: //left
       // console.log('left');
-      this.score += shifter(this.board, false ,true);
+      this.score += shifter(this.board, false, true);
 
       break;
     case 39: //right
       // console.log('right');
-      this.score += rightShifter(this.board);
+      this.score += shifter(this.board, true, true);
       break;
   }
 };
