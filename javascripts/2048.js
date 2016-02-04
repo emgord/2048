@@ -58,8 +58,38 @@ var mergeRightDown = function(array){
           };
 };
 
+var axisBuilder = function(boardLength, nonzeros, forward) {
+  // takes in the array of nonzeros, returns merged reconstructed row or column
+  // pretend we're doing a left shift of nonzeros = [2,2,2]
+  // forward true = right and down (mergeRightDown)
+  // forward false = left and up (mergeLeftUp)
+  var score = 0;
+  var mergeReturn;
+  if (nonzeros.length !== 0) {
+    if (forward) {
+      mergeReturn = mergeRightDown(nonzeros);
+    } else {
+      mergeReturn = mergeLeftUp(nonzeros);
+    }
+    nonzeros = mergeReturn.squished_array;
+    score += mergeReturn.score;
+  }
+
+  var numZeros = (boardLength - nonzeros.length);
+  var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
+  var rebuiltArray;
+  if (forward){
+    rebuiltArray = zeros.concat(nonzeros);
+  } else {
+    rebuiltArray = nonzeros.concat(zeros);
+  }
+  return { rebuiltArray: rebuiltArray,
+          score: score
+          };
+};
+
 var leftShifter = function(board) {
-var score = 0;
+var score = new Number();
   for (var row = 0; row < board.length; row++) {
     var nonzeros = [];
     for (var col = 0; col < board.length; col++) {
@@ -67,15 +97,9 @@ var score = 0;
         nonzeros.push(board[row][col]);
       }
     }
-    if (nonzeros.length !== 0) {
-      var mergeReturn = mergeLeftUp(nonzeros);
-      nonzeros = mergeReturn.squished_array;
-      score += mergeReturn.score;
-    }
-
-    var numZeros = (board.length - nonzeros.length);
-    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
-    var new_row = nonzeros.concat(zeros);
+    var axis = axisBuilder(board.length, nonzeros, false);
+    var new_row = axis.rebuiltArray;
+    score += axis.score;
     board[row] = new_row;
   }
   return score;
