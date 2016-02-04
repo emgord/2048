@@ -1,5 +1,6 @@
 html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  background-color: #e6e9f0;
 }
 
 #all-content {
@@ -10,18 +11,27 @@ html {
 
 h1 {
   text-align: left;
+  color: #431c5d;
+  font-size: 3em;
 }
 
 #score {
   text-align: center;
-  background-color: blue;
-  padding: 2%;
+  background-color: #431c5d;
+  padding: 2.5%;
   font-size: 0.6em;
-  width: 5rem;
+  width: 3rem;
   position: absolute;
   top: 0;
   right: 0;
   border-radius: 0.5rem;
+  color: #e6e9f0;
+}
+#score-value{
+  padding-top: 12px;
+  font-size: 2em;
+  font-weight: bold;
+  color: #bccbde;
 }
 
 #gameboard {

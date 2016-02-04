@@ -1,17 +1,17 @@
 var Game = function() {
-  // this.board = [[0, 0, 0, 0],
-  //               [0, 0, 0, 0],
-  //               [0, 0, 0, 0],
-  //               [0, 0, 0, 0]];
-  this.board = [[2, 2, 32, 512],
-                [2, 16, 32, 256],
-                [4, 2, 64, 128],
-                [2048, 2, 1024, 8]];
+  this.board = [[0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]];
+  // this.board = [[2, 2, 32, 512],
+  //               [2, 16, 32, 256],
+  //               [4, 2, 64, 128],
+  //               [2048, 2, 1024, 8]];
   this.addTile();
   this.addTile();
   this.win = false;
   this.lose = false;
-  this.score = 0;
+  this.score = 2036;
 };
 
 var mergeBackwards = function(array){
