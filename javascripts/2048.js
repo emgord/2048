@@ -251,6 +251,7 @@ $(document).ready(function() {
       game.moveTile(tile, event.which);
       game.addTile();
       game.clearBoard();
+      console.log(game.score);
       game.drawBoard();
       game.checkWinner();
       if (game.win || game.lose) {
