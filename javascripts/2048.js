@@ -189,6 +189,11 @@ Game.prototype.drawBoard = function(){
   }
 };
 
+Game.prototype.updateScore = function(){
+  $("#score").empty();
+  $("#score").append(this.score);
+};
+
 Game.prototype.clearBoard = function(){
   $(".tile").remove();
 };
@@ -198,6 +203,7 @@ $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
   game.drawBoard();
+  game.updateScore();
 
 
   $('body').keydown(function(event){
@@ -208,8 +214,8 @@ $(document).ready(function() {
       game.moveTile(tile, event.which);
       game.addTile();
       game.clearBoard();
-      console.log(game.score);
       game.drawBoard();
+      game.updateScore();
       game.checkWinner();
       if (game.win || game.lose) {
         console.log("Game Over, lost: " + game.lose + ", win: " + game.win);

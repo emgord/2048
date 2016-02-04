@@ -2,6 +2,19 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+#all-content {
+  width: 18.5rem;
+  margin: auto;
+}
+
+h1 {
+  text-align: left;
+}
+
+#score {
+  text-align: right;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
