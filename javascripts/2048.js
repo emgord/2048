@@ -84,78 +84,6 @@ var axisBuilder = function(boardLength, nonzeros, forward) {
           };
 };
 
-var leftShifter = function(board) {
-var score = new Number();
-  for (var row = 0; row < board.length; row++) {
-    var nonzeros = [];
-    for (var col = 0; col < board.length; col++) {
-      if (board[row][col] !== 0) {
-        nonzeros.push(board[row][col]);
-      }
-    }
-    var axis = axisBuilder(board.length, nonzeros, false);
-    var new_row = axis.rebuiltArray;
-    score += axis.score;
-    board[row] = new_row;
-  }
-  return score;
-};
-
-var rightShifter = function(board) {
-  var score = new Number();
-  for (var row = 0; row < board.length; row++) {
-    var nonzeros = [];
-    for (var col = 0; col < board.length; col++) {
-      if (board[row][col] !== 0) {
-        nonzeros.push(board[row][col]);
-      }
-    }
-    var axis = axisBuilder(board.length, nonzeros, true);
-    var new_row = axis.rebuiltArray;
-    score += axis.score;
-    board[row] = new_row;
-  }
-  return score;
-};
-
-var downShifter = function(board) {
-  var score = new Number();
-  for (var col = 0; col < board.length; col++) {
-    var nonzeros = [];
-    for (var row = 0; row < board.length; row++) {
-      if (board[row][col] !== 0) {
-        nonzeros.push(board[row][col]);
-      }
-    }
-    var axis = axisBuilder(board.length, nonzeros, true);
-    var new_col = axis.rebuiltArray;
-    score += axis.score;
-    for (var i = 0; i < board.length; i++){
-      board[i][col] = new_col[i];
-    }
-  }
-  return score;
-};
-
-var upShifter = function(board) {
-  var score = new Number();
-  for (var col = 0; col < board.length; col++) {
-    var nonzeros = [];
-    for (var row = 0; row < board.length; row++) {
-      if (board[row][col] !== 0) {
-        nonzeros.push(board[row][col]);
-      }
-    }
-
-    var axis = axisBuilder(board.length, nonzeros, false);
-    var new_col = axis.rebuiltArray;
-    score += axis.score;
-    for (var i = 0; i < board.length; i++){
-      board[i][col] = new_col[i];
-    }
-  }
-  return score;
-};
 // forward is a boolean, true indicates down or right, row is a boolean, true is left or right, false is up or down
 var shifter = function(board, forward, row) {
   var score = new Number();
@@ -190,16 +118,12 @@ function arraysEqual(a1,a2) {
     return JSON.stringify(a1)==JSON.stringify(a2);
 }
 
-Game.prototype.updateScore = function(points) {
-  this.score += points;
-};
-
 Game.prototype.checkLoser = function() {
   var fakeBoard = this.board.slice(0);
-  upShifter(fakeBoard);
-  leftShifter(fakeBoard);
-  rightShifter(fakeBoard);
-  downShifter(fakeBoard);
+  shifter(fakeBoard, true, true);
+  shifter(fakeBoard, false, true);
+  shifter(fakeBoard, true, false);
+  shifter(fakeBoard, false, false);
   if (arraysEqual(fakeBoard, this.board)) {
     this.lose = true;
   }
