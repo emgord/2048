@@ -1,12 +1,12 @@
 var Game = function() {
-  this.board = [[0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0]];
-  // this.board = [[2, 2, 32, 0],
-  //               [2, 2, 32, 0],
-  //               [4, 2, 0, 0],
-  //               [2, 2, 2, 0]];
+  // this.board = [[0, 0, 0, 0],
+  //               [0, 0, 0, 0],
+  //               [0, 0, 0, 0],
+  //               [0, 0, 0, 0]];
+  this.board = [[2, 2, 32, 512],
+                [2, 16, 32, 256],
+                [4, 2, 64, 128],
+                [2048, 2, 1024, 8]];
   this.addTile();
   this.addTile();
   this.win = false;
@@ -190,8 +190,8 @@ Game.prototype.drawBoard = function(){
 };
 
 Game.prototype.updateScore = function(){
-  $("#score").empty();
-  $("#score").append(this.score);
+  $("#score-value").empty();
+  $("#score-value").append(this.score);
 };
 
 Game.prototype.clearBoard = function(){

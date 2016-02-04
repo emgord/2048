@@ -5,6 +5,7 @@ html {
 #all-content {
   width: 18.5rem;
   margin: auto;
+  position: relative;
 }
 
 h1 {
@@ -12,11 +13,19 @@ h1 {
 }
 
 #score {
-  text-align: right;
+  text-align: center;
+  background-color: blue;
+  padding: 2%;
+  font-size: 0.6em;
+  width: 5rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0.5rem;
 }
 
 #gameboard {
-  background: #bbada0;
+  background: #431c5d;
   border-radius: 0.5rem;
   height: 18.5rem;
   margin: 1rem auto;
@@ -61,14 +70,14 @@ h1 {
 .tile[data-col=c2] { left: 9rem; }
 .tile[data-col=c3] { left: 13.5rem; }
 
-.tile[data-val="2"]    { color: #776e65; background-color: #eee4da; }
-.tile[data-val="4"]    { color: #776e65; background-color: #ede0c8; }
-.tile[data-val="8"]    { background-color: #f2b179; }
-.tile[data-val="16"]   { background-color: #f59563; }
-.tile[data-val="32"]   { background: #f67c5f; }
+.tile[data-val="2"]    { color: #431c5d; background-color: #bccbde; }
+.tile[data-val="4"]    { color: #431c5d; background-color: #cdd422; }
+.tile[data-val="8"]    { background-color: #e05915; }
+.tile[data-val="16"]   { background-color: #ff1a75; }
+.tile[data-val="32"]   { background: #3333ff; }
 .tile[data-val="64"]   { background: #f65e3b; }
-.tile[data-val="128"]  { background: #edcf72; }
-.tile[data-val="256"]  { background: #edcc61; }
-.tile[data-val="512"]  { background: #edc850; }
-.tile[data-val="1024"] { background: #edc53f; }
-.tile[data-val="2048"] { background: #edc22e; }
+.tile[data-val="128"]  { background: #ff9800; }
+.tile[data-val="256"]  { background: #e040fb; }
+.tile[data-val="512"]  { color: #431c5d; background: #64ffda; }
+.tile[data-val="1024"] { color: #431c5d; background: #97ff00; }
+.tile[data-val="2048"] { background: #259b24; }
