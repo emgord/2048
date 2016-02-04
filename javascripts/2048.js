@@ -11,7 +11,7 @@ var Game = function() {
   this.addTile();
   this.win = false;
   this.lose = false;
-  this.score = 2036;
+  this.score = 0;
 };
 
 var mergeBackwards = function(array){
@@ -155,25 +155,41 @@ Game.prototype.addTile = function() {
   this.board[row][column] = value;
 };
 
+var floatPoints = function(points) {
+  $("#point-float").append("+" + points);
+  $("#point-float").animate({
+    top: '-=100px', opacity: 0}, 1000, function(){
+      $(this).css({'top': '+=100px', 'opacity':100});
+      $("#point-float").empty();
+    } );
+};
+
 Game.prototype.moveTile = function(tile, direction) {
-  // Game method here
+  var points;
   switch(direction) {
     case 38: //up
       // console.log('up');
-      this.score += shifter(this.board, false, false);
+      points = shifter(this.board, false, false);
+      this.score += points;
+      if (points !== 0){ floatPoints(points); }
       break;
     case 40: //down
-      this.score += shifter(this.board, true, false);
+      points = shifter(this.board, true, false);
+      this.score += points;
+      if (points !== 0){ floatPoints(points); }
       // console.log('down');
       break;
     case 37: //left
       // console.log('left');
-      this.score += shifter(this.board, false, true);
-
+      points = shifter(this.board, false, true);
+      this.score += points;
+      if (points !== 0){ floatPoints(points); }
       break;
     case 39: //right
       // console.log('right');
-      this.score += shifter(this.board, true, true);
+      points = shifter(this.board, true, true);
+      this.score += points;
+      if (points !== 0){ floatPoints(points); }
       break;
   }
 };

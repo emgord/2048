@@ -27,6 +27,16 @@ h1 {
   border-radius: 0.5rem;
   color: #e6e9f0;
 }
+
+#point-float {
+  position: absolute;
+  top: 6.5%;
+  right: 9%;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ff1a75;
+
+}
 #score-value{
   padding-top: 12px;
   font-size: 2em;
