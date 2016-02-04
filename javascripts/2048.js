@@ -156,6 +156,35 @@ var upShifter = function(board) {
   }
   return score;
 };
+// forward is a boolean, true indicates down or right, row is a boolean, true is left or right, false is up or down
+var shifter = function(board, forward, row) {
+  var score = new Number();
+  var cell;
+  for (var outer = 0; outer < board.length; outer++) {
+    var nonzeros = [];
+    for (var inner = 0; inner < board.length; inner++) {
+      if (row) {
+        cell = board[outer][inner];
+      } else {
+        cell = board[inner][outer];
+      }
+        if (cell !== 0) {
+          nonzeros.push(cell);
+        }
+    }
+    var axisBuildReturn = axisBuilder(board.length, nonzeros, forward);
+    var new_axis = axisBuildReturn.rebuiltArray;
+    score += axisBuildReturn.score;
+    if (row){
+      board[outer] = new_axis;
+    } else {
+      for (var i = 0; i < board.length; i++){
+        board[i][inner] = new_axis[i];
+      }
+    }
+  }
+  return score;
+};
 
 function arraysEqual(a1,a2) {
     return JSON.stringify(a1)==JSON.stringify(a2);
@@ -215,7 +244,7 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 37: //left
       // console.log('left');
-      this.score += leftShifter(this.board);
+      this.score += shifter(this.board, false ,true);
 
       break;
     case 39: //right
