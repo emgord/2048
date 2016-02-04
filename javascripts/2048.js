@@ -14,7 +14,7 @@ var Game = function() {
   this.score = 0;
 };
 
-var mergeLeftUp = function(array){
+var mergeBackwards = function(array){
   var score = 0;
   var squished_array = [];
   while (array.length > 0) {
@@ -36,7 +36,7 @@ var mergeLeftUp = function(array){
           };
 };
 
-var mergeRightDown = function(array){
+var mergeForwards = function(array){
   var score = 0;
   var squished_array = [];
   while (array.length > 0) {
@@ -59,17 +59,13 @@ var mergeRightDown = function(array){
 };
 
 var axisBuilder = function(boardLength, nonzeros, forward) {
-  // takes in the array of nonzeros, returns merged reconstructed row or column
-  // pretend we're doing a left shift of nonzeros = [2,2,2]
-  // forward true = right and down (mergeRightDown)
-  // forward false = left and up (mergeLeftUp)
   var score = 0;
   var mergeReturn;
   if (nonzeros.length !== 0) {
     if (forward) {
-      mergeReturn = mergeRightDown(nonzeros);
+      mergeReturn = mergeForwards(nonzeros);
     } else {
-      mergeReturn = mergeLeftUp(nonzeros);
+      mergeReturn = mergeBackwards(nonzeros);
     }
     nonzeros = mergeReturn.squished_array;
     score += mergeReturn.score;
