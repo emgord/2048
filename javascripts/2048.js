@@ -142,7 +142,7 @@ var downShifter = function(board) {
 };
 
 var upShifter = function(board) {
-  var score = 0;
+  var score = new Number();
   for (var col = 0; col < board.length; col++) {
     var nonzeros = [];
     for (var row = 0; row < board.length; row++) {
@@ -151,17 +151,12 @@ var upShifter = function(board) {
       }
     }
 
-    if (nonzeros.length !== 0) {
-      var mergeReturn = mergeLeftUp(nonzeros);
-      nonzeros = mergeReturn.squished_array;
-      score += mergeReturn.score;
+    var axis = axisBuilder(board.length, nonzeros, false);
+    var new_col = axis.rebuiltArray;
+    score += axis.score;
+    for (var i = 0; i < board.length; i++){
+      board[i][col] = new_col[i];
     }
-    var numZeros = (board.length - nonzeros.length);
-    var zeros = new Array(numZeros + 1).join('0').split('').map(parseFloat);
-      var new_col = nonzeros.concat(zeros);
-        for (var i = 0; i < board.length; i++){
-          board[i][col] = new_col[i];
-        }
   }
   return score;
 };
