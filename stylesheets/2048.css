@@ -16,6 +16,20 @@ h1 {
   font-family: 'Neucha', cursive;
 }
 
+#outcome {
+  color: yellow;
+  background-color: rgba(238, 204, 255, .9);
+  position: absolute;
+  width: 18.5em;
+  height: 18.5em;
+  border-radius: 0.5rem;
+  z-index: 1;
+}
+/*#lost.div > p {
+  position: absolute;
+  text-align: center;
+}*/
+
 #score {
   text-align: center;
   background-color: #431c5d;

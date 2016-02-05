@@ -1,12 +1,16 @@
 var Game = function() {
-  this.board = [[0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0]];
-  // this.board = [[2, 2, 32, 512],
-  //               [2, 16, 32, 256],
-  //               [4, 2, 64, 128],
-  //               [2048, 2, 1024, 8]];
+  this.newGame();
+};
+
+Game.prototype.newGame = function() {
+  // this.board = [[0, 0, 0, 0],
+  //               [0, 0, 0, 0],
+  //               [0, 0, 0, 0],
+  //               [0, 0, 0, 0]];
+  this.board = [[2, 2, 32, 512],
+              [2, 16, 320, 256],
+              [4, 2, 64, 128],
+              [2048, 90, 1024, 8]];
   this.addTile();
   this.addTile();
   this.win = false;
@@ -129,7 +133,6 @@ Game.prototype.checkLoser = function() {
   }
 };
 
-
 Game.prototype.checkWinner = function() {
   var flattenedBoard = [].concat.apply([],this.board);
   if (flattenedBoard.indexOf(2048) !== -1) {
@@ -219,9 +222,10 @@ $(document).ready(function() {
   var game = new Game();
   game.drawBoard();
   game.updateScore();
-
-
   $('body').keydown(function(event){
+    if (game.lose || game.win) {
+      return;
+    }
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
@@ -232,9 +236,21 @@ $(document).ready(function() {
       game.drawBoard();
       game.updateScore();
       game.checkWinner();
-      if (game.win || game.lose) {
-        console.log("Game Over, lost: " + game.lose + ", win: " + game.win);
+      if (game.win) {
+        $("#gameboard").append("<div id=\"outcome\"><p>You WIN!!!!!!</p></div>");
+      } else if (game.lose) {
+        $("#gameboard").append("<div id=\"outcome\"><p>Game Over!</p></div>");
       }
     }
   });
+
+  $('button').click(function(){
+    $("#outcome").remove();
+    game.newGame();
+    game.clearBoard();
+    game.drawBoard();
+    game.updateScore();
+    console.log("Hi");
+  });
+
 });
