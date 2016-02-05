@@ -10,7 +10,7 @@ Game.prototype.newGame = function() {
   this.board = [[2, 2, 32, 512],
               [2, 16, 320, 256],
               [4, 2, 64, 128],
-              [2048, 90, 1024, 8]];
+              [1048, 90, 1024, 8]];
   this.addTile();
   this.addTile();
   this.win = false;
