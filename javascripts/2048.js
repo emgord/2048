@@ -215,7 +215,6 @@ Game.prototype.clearBoard = function(){
 };
 
 $(document).ready(function() {
-  console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
   game.drawBoard();

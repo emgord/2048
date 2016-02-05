@@ -12,7 +12,8 @@ html {
 h1 {
   text-align: left;
   color: #431c5d;
-  font-size: 3em;
+  font-size: 4em;
+  font-family: 'Neucha', cursive;
 }
 
 #score {
