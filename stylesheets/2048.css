@@ -1,0 +1,134 @@
+html {
+  font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  background-color: #e6e9f0;
+}
+
+button {
+  background: #2F4F4F;
+  color: #ffffe5;
+  border-radius: 0.5rem;
+  padding: 2.5%;
+  font-size: 0.5em;
+  position: absolute;
+  top: 16%;
+  right: 1%;
+
+}
+
+#all-content {
+  width: 18.5rem;
+  margin: auto;
+  position: relative;
+}
+
+h1 {
+  text-align: left;
+  color: #431c5d;
+  font-size: 4em;
+  font-family: 'Neucha', cursive;
+}
+
+#outcome {
+  color: #2F4F4F;
+  background-color: rgba(238, 204, 255, .9);
+  position: absolute;
+  width: 18.5em;
+  height: 18.5em;
+  border-radius: 0.5rem;
+  z-index: 1;
+}
+div > p {
+  vertical-align: middle;
+  text-align: center;
+  font-size: 5em;
+  font-family: 'Neucha', cursive;
+  /*position: absolute;
+  top: 37%;*/
+}
+
+#score {
+  text-align: center;
+  background-color: #431c5d;
+  padding: 2.5%;
+  font-size: 0.6em;
+  width: 3rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0.5rem;
+  color: #e6e9f0;
+}
+
+#point-float {
+  position: absolute;
+  top: 6.5%;
+  right: 6.5%;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ff1a75;
+
+}
+#score-value{
+  padding-top: 12px;
+  font-size: 2em;
+  font-weight: bold;
+  color: #bccbde;
+}
+
+#gameboard {
+  background: #431c5d;
+  border-radius: 0.5rem;
+  height: 18.5rem;
+  margin: 1rem auto;
+  position: relative;
+  width: 18.5rem;
+}
+
+.cell {
+  background: rgba(238, 228, 218, 0.35);
+  border-radius: 0.5rem;
+  float: left;
+  height: 4rem;
+  margin: 0.5rem 0 0 0.5rem ;
+  width: 4rem;
+}
+
+.tile {
+  position: absolute;
+  top: 0; left: 0;
+  transition: all 0.2s ease-in-out;
+
+  color: #f9f6f2;
+  background: #000;
+
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 4rem;
+  height: 4rem;
+  margin: 0.5rem 0 0 0.5rem ;
+  text-align: center;
+  width: 4rem;
+}
+
+.tile[data-row=r0] { top: 0; }
+.tile[data-row=r1] { top: 4.5rem; }
+.tile[data-row=r2] { top: 9rem; }
+.tile[data-row=r3] { top: 13.5rem; }
+
+.tile[data-col=c0] { left: 0; }
+.tile[data-col=c1] { left: 4.5rem; }
+.tile[data-col=c2] { left: 9rem; }
+.tile[data-col=c3] { left: 13.5rem; }
+
+.tile[data-val="2"]    { color: #431c5d; background-color: #bccbde; }
+.tile[data-val="4"]    { color: #431c5d; background-color: #cdd422; }
+.tile[data-val="8"]    { background-color: #e05915; }
+.tile[data-val="16"]   { background-color: #ff1a75; }
+.tile[data-val="32"]   { background: #3333ff; }
+.tile[data-val="64"]   { background: #f65e3b; }
+.tile[data-val="128"]  { background: #ff9800; }
+.tile[data-val="256"]  { background: #e040fb; }
+.tile[data-val="512"]  { color: #431c5d; background: #64ffda; }
+.tile[data-val="1024"] { color: #431c5d; background: #97ff00; }
+.tile[data-val="2048"] { background: #259b24; }
